@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Não encontrado')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3">Cálculo não encontrado</h1>
+    <p>O cálculo que você procurou não existe ou foi removido.</p>
+    <a class="btn btn-agro" th:href="@{/calculos}">Ver histórico</a>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

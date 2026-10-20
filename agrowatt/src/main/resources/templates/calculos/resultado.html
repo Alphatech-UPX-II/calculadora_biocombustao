@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Resultado')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container" th:with="dia=${d.resultado().dia()}, mes=${d.resultado().mes()}">
+    <h1 class="h3" th:text="${d.residuo()}">Resíduo</h1>
+    <p class="text-muted">
+        <span th:text="${#numbers.formatDecimal(d.massaKg(), 1, 'POINT', 2, 'COMMA')} + ' kg por dia · '"></span>
+        <span th:text="${#temporals.format(d.dataCalculo(), 'dd/MM/yyyy HH:mm')}"></span>
+    </p>
+
+    <h2 class="h5 mt-4">Potencial energético</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-resultado align-middle">
+            <thead>
+            <tr><th>Grandeza</th><th>Por dia</th><th>Por mês</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sólidos totais (kg)</td>
+                <td th:text="${#numbers.formatDecimal(dia.massaStKg(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.massaStKg(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Sólidos voláteis (kg)</td>
+                <td th:text="${#numbers.formatDecimal(dia.massaSvKg(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.massaSvKg(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Metano (m³)</td>
+                <td th:text="${#numbers.formatDecimal(dia.metanoM3(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.metanoM3(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Biogás (m³)</td>
+                <td th:text="${#numbers.formatDecimal(dia.biogasM3(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.biogasM3(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Energia (kWh)</td>
+                <td th:text="${#numbers.formatDecimal(dia.energiaKwh(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.energiaKwh(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Energia elétrica (kWh)</td>
+                <td th:text="${#numbers.formatDecimal(dia.eletricaMinKwh(), 1, 'POINT', 1, 'COMMA')} + ' – ' + ${#numbers.formatDecimal(dia.eletricaMaxKwh(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.eletricaMinKwh(), 1, 'POINT', 0, 'COMMA')} + ' – ' + ${#numbers.formatDecimal(mes.eletricaMaxKwh(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>Diesel equivalente (L)</td>
+                <td th:text="${#numbers.formatDecimal(dia.dieselL(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.dieselL(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            <tr>
+                <td>CO₂e evitado (kg, teto)</td>
+                <td th:text="${#numbers.formatDecimal(dia.co2eKg(), 1, 'POINT', 0, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(mes.co2eKg(), 1, 'POINT', 0, 'COMMA')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-secondary small">
+        <p class="mb-1">A <b>energia elétrica</b> aparece em faixa porque depende da eficiência do motogerador (25% a 38%).</p>
+        <p class="mb-1">O <b>CO₂e evitado</b> é um teto: vale se esse metano iria para a atmosfera sem o biodigestor.</p>
+        <p class="mb-1">Os percentuais de <b>sólidos totais e voláteis</b> são provisórios nesta versão.</p>
+        <p class="mb-0">Esta é uma estimativa de potencial e não substitui um projeto técnico.</p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-agro" th:href="@{/calculos/novo}">Novo cálculo</a>
+        <a class="btn btn-outline-secondary" th:href="@{/como-calculamos}">Como calculamos</a>
+        <a class="btn btn-outline-secondary" th:href="@{/calculos}">Histórico</a>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

@@ -1,0 +1,8 @@
+:root { --agro: #0F6B54; --agro-escuro: #0A4F3E; --agro-claro: #E3F1EC; }
+.bg-agro { background-color: var(--agro); }
+.btn-agro { background-color: var(--agro); border-color: var(--agro-escuro); color: #fff; }
+.btn-agro:hover, .btn-agro:focus { background-color: var(--agro-escuro); color: #fff; }
+.text-agro { color: var(--agro); }
+.card-agro { border-top: 4px solid var(--agro); }
+.table-resultado th { background-color: var(--agro-claro); }
+.table-resultado td, .table-resultado th { white-space: nowrap; }

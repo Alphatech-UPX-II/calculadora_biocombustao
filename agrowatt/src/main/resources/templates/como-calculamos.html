@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Como calculamos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3">Como calculamos</h1>
+    <p>O cálculo parte da massa do resíduo e usa os parâmetros cadastrados no banco de dados <code>calculadora_biocombustao</code>. Todos os números abaixo vêm do banco.</p>
+
+    <h2 class="h5 mt-4">Fórmulas</h2>
+    <pre class="bg-light border rounded p-3 small">Sólidos totais (kg)   = massa × %ST ÷ 100
+Sólidos voláteis (kg) = sólidos totais × %SV ÷ 100
+Metano (m³)           = sólidos voláteis × rendimento de metano (m³ CH₄/kg SV)
+Biogás (m³)           = metano ÷ (%CH₄ ÷ 100)
+Energia (kWh)         = metano × PCI do metano
+Energia elétrica      = energia × eficiência do motogerador (mín. a máx.)
+Diesel equivalente    = biogás × litros de diesel por m³
+CO₂e evitado (kg)     = metano × densidade do metano × GWP do metano
+Valores mensais       = valores diários × dias no mês</pre>
+
+    <h2 class="h5 mt-4">Parâmetros dos resíduos</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered small align-middle">
+            <thead><tr><th>Resíduo</th><th>%ST</th><th>%SV</th><th>Rendimento (m³ CH₄/kg SV)</th><th>%CH₄</th><th>Referência</th></tr></thead>
+            <tbody>
+            <tr th:each="r : ${residuos}">
+                <td th:text="${r.nome}"></td>
+                <td th:text="${#numbers.formatDecimal(r.percentualSt, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(r.percentualSv, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(r.rendimentoMetano, 1, 'POINT', 3, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(r.percentualMetano, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${r.referencia}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="h5 mt-4">Premissas</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered small align-middle">
+            <thead><tr><th>Premissa</th><th>Valor</th><th>Fonte</th></tr></thead>
+            <tbody>
+            <tr th:each="p : ${premissas}">
+                <td th:text="${p.descricao}"></td>
+                <td th:text="${#numbers.formatDecimal(p.valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${p.fonte}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-warning small mt-3">
+        Os percentuais de sólidos totais (20%) e sólidos voláteis (80%) são provisórios e iguais para todos os resíduos nesta versão. Eles serão substituídos pelos valores específicos de cada resíduo na entrega final.
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

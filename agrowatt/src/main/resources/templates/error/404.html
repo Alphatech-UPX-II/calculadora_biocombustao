@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Não encontrada')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3">Página não encontrada</h1>
+    <p>O endereço que você acessou não existe no AGROWATT.</p>
+    <a class="btn btn-agro" th:href="@{/}">Voltar ao início</a>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

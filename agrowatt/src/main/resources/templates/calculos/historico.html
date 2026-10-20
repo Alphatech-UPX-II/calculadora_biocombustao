@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Histórico')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3 mb-3">Histórico de cálculos</h1>
+    <p th:if="${linhas.isEmpty()}">Nenhum cálculo ainda. <a th:href="@{/calculos/novo}">Faça o primeiro.</a></p>
+    <div class="table-responsive" th:unless="${linhas.isEmpty()}">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr><th>Data</th><th>Resíduo</th><th>Massa (kg/dia)</th><th>Metano (m³/dia)</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="l : ${linhas}">
+                <td th:text="${#temporals.format(l.dataCalculo(), 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${l.residuo()}"></td>
+                <td th:text="${#numbers.formatDecimal(l.massaKg(), 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${#numbers.formatDecimal(l.metanoM3Dia(), 1, 'POINT', 1, 'COMMA')}"></td>
+                <td><a class="btn btn-sm btn-outline-secondary" th:href="@{/calculos/{id}(id=${l.id()})}">ver</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

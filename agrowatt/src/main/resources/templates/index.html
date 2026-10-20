@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Início')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="text-agro fw-bold">AGROWATT</h1>
+    <p class="lead">Do resíduo ao watt: descubra quanta energia e quanto metano evitado os resíduos da sua propriedade representam.</p>
+    <p>Escolha o resíduo (frutas e vegetais, restos de alimentos, resíduos domiciliares, esterco de gado ou de frango), informe a massa e veja os sólidos totais e voláteis, o metano, o biogás, a energia elétrica estimada, o diesel equivalente e o CO₂e evitado, com a fonte de cada número.</p>
+    <div class="d-flex flex-wrap gap-2 mt-4">
+        <a class="btn btn-agro btn-lg" th:href="@{/calculos/novo}">Novo cálculo</a>
+        <a class="btn btn-outline-secondary btn-lg" th:href="@{/calculos}">Ver histórico</a>
+    </div>
+    <div class="row g-3 mt-4">
+        <div class="col-md-6"><div class="card card-agro h-100"><div class="card-body">
+            <h2 class="h5">ODS 7: energia limpa</h2>
+            <p class="mb-0">O biogás gera eletricidade renovável na própria propriedade.</p>
+        </div></div></div>
+        <div class="col-md-6"><div class="card card-agro h-100"><div class="card-body">
+            <h2 class="h5">ODS 13: ação climática</h2>
+            <p class="mb-0">Queimar o metano dos resíduos evita que ele aqueça a atmosfera.</p>
+        </div></div></div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Novo cálculo')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container">
+    <h1 class="h3 mb-3">Novo cálculo</h1>
+    <form th:action="@{/calculos}" th:object="${form}" method="post" novalidate>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label" for="idResiduo">Resíduo *</label>
+                <select class="form-select" th:field="*{idResiduo}" th:errorclass="is-invalid">
+                    <option value="">Escolha o resíduo</option>
+                    <option th:each="r : ${residuos}" th:value="${r.id}" th:text="${r.nome}">Resíduo</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{idResiduo}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="massa">Massa por dia *</label>
+                <input class="form-control" type="text" inputmode="decimal" th:field="*{massa}"
+                       th:classappend="${#fields.hasErrors('massa') or #fields.hasErrors('massaValida')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{massa}"></div>
+                <div class="invalid-feedback" th:errors="*{massaValida}"></div>
+                <div class="form-text">Pode usar vírgula e ponto de milhar: 1.500 ou 2,5.</div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="unidade">Unidade</label>
+                <select class="form-select" th:field="*{unidade}" th:errorclass="is-invalid">
+                    <option value="kg">kg</option>
+                    <option value="t">t</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{unidade}"></div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-agro btn-lg mt-4">Calcular</button>
+    </form>
+</main>
+<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>
